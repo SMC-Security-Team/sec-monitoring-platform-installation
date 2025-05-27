@@ -13,13 +13,45 @@ The Worker is used to receive logs from the sensors and then authenticate these 
 ### Manager and Worker Architecture
 ![manager_worker](https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/blob/main/manager_worker.png)
 
-### Docker Compose (Manager)
-```yaml
-TODO
+### Database Setup
 ```
-### Docker Compose (Worker)
+mysql -u username -p your_database < schema.sql
+```
+
+### Starting Manager
+1. Create a `.env` file with the following variables
+```env
+MYSQL_CONNECTION_STRING=root:root@tcp(10.0.0.2)/db_name?parseTime=true
+DASHBOARD_PASSWORD=password
+DASHBOARD_USERNAME=admin
+OPENSEARCH_ADDRESS=https://10.0.0.1:9200
+OPENSEARCH_USERNAME=admin
+OPENSEARCH_PASSWORD=!Passw0rd#1234
+OPENSEARCH_DASHBOARD_URL=http://10.0.0.1:5601
+PORT=9091 # Running Port
+```
+
+2. Start the container
+```bash
+docker run -d -p 9091:9091 --env-file ./.env smcsec/security-monitoring-manager
+```
+
+### Starting Worker
+
+```env
+PORT=8080
+RUN_MODE=release
+MYSQL_CONNECTION_STRING=root:root@tcp(10.0.0.1)/db_name?parseTime=true
+OPENSEARCH_ADDRESS=http://opensearch:9200
+OPENSEARCH_USERNAME=admin
+OPENSEARCH_PASSWORD=!Passw0rd#1234
+MISP_ADDRESS=https://10.0.0.2
+MISP_AUTHKEY=misp_api_key
+```
+
+2. Start the container
 ```yaml
-TODO
+docker run -d -p 9090:9090 --env-file ./.env smcsec/security-monitoring-worker
 ```
 
 ## Sensor
