@@ -56,7 +56,9 @@ docker run -d -p 9090:9090 --env-file ./.env smcsec/security-monitoring-worker
 
 ## Sensor
 
-The sensor is used to forward the Suricata and Zeek logs to the worker. It will first structure the logs, then send them to the worker with an authentication key. It also reports the status of the sensor to the system, such as CPU usage and memory.
+The sensor is used to forward the Suricata and Zeek logs to the worker. It will first structure the logs, then send them to the worker with an authentication key. It also reports the status of the sensor to the system, such as CPU usage and memory. 
+
+Repository: https://github.com/SMC-Security-Team/security-monitoring-sensor
 
 ### Sensor Architecture
 ![sensor](https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/blob/main/sensor.png)
