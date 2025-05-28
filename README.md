@@ -79,26 +79,42 @@ redef LogAscii::json_include_unset_fields=T;
 @load policy/frameworks/notice/community-id
 ```
 
-### Docker Compose Example
+
+### Quick Start
+Create a `sensor.yaml` configuration file in the project root directory:
+
 ```yaml
-version: "3"
-services:
-  security-monitoring-sensor:
-    image: "smcsec/security-monitoring-sensor:latest"
-    environment:
-      - SERVER_URL=http://10.0.0.1/api/v1
-      - AUTH_KEY=yyy:xxxxxxxx
-      - ZEEK_LOG_PATH=/zeek-logs/zeek
-      - SURICATA_LOG_PATH=/suricata-logs
-    volumes:
-      - /opt/zeek/spool:/zeek-logs
-      - /var/log/suricata:/suricata-logs
+server:
+  url: "http://your-server.com/api/v1"
+  auth_key: "your_authentication_key"
+
+api:
+  zeek: "/logs/zeek"
+  suricata: "/logs/suricata"
+
+collector:
+  interval: 5
+
+logs:
+  zeek_path: "/opt/zeek/spool" # Spool directory of Zeek
+  suricata_path: "/var/log/suricata"
 ```
 
-- Set SERVER_URL to match your worker's API endpoint
-- Set AUTH_KEY to the authentication key obtained from your dashboard
+Configuration parameters:
 
-Volume Mounts
+- `server.url`: URL of the central monitoring server API
+- `server.auth_key`: Authentication key for the server
+- `api.zeek`: API endpoint path for Zeek logs
+- `api.suricata`: API endpoint path for Suricata logs
+- `collector.interval`: Collection interval in seconds
+- `logs.zeek_path`: Directory path where Zeek log files are stored
+- `logs.suricata_path`: Directory path where Suricata log files are stored
 
-- Zeek logs: Mount your Zeek spool directory to /zeek-logs in the container
-- Suricata logs: Mount your Suricata log directory to /suricata-logs in the container
+Run the container
+```bash
+docker run -d \
+  -v /path/to/your/sensor.yaml:/app/sensor.yaml:ro \
+  -v /opt/zeek/spool:/zeek:ro \
+  -v /opt/zeek/logs:/suricata:ro \
+  smcsec/security-monitoring-sensor
+```
