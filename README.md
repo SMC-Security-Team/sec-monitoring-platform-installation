@@ -117,6 +117,6 @@ Run the container
 docker run -d \
   -v /path/to/your/sensor.yaml:/app/sensor.yaml:ro \
   -v /opt/zeek/spool:/zeek:ro \
-  -v /opt/zeek/logs:/suricata:ro \
+  -v /var/log/suricata:/suricata:ro \
   smcsec/security-monitoring-sensor
 ```
