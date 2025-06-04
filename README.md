@@ -51,7 +51,7 @@ MISP_AUTHKEY=misp_api_key
 
 2. Start the container
 ```yaml
-docker run -d -p 9090:9090 --env-file ./.env smcsec/security-monitoring-worker
+docker run -d -p 8080:8080 --env-file ./.env smcsec/security-monitoring-worker
 ```
 
 ## Sensor
