@@ -1,12 +1,14 @@
+# Your have to change the environment according to your system
+
 services:
   db:
     image: mysql:8.4.5
     container_name: mysql_db
     environment:
-      MYSQL_ROOT_PASSWORD: password # Change this
-      MYSQL_DATABASE: netmon # Change this
-      MYSQL_USER: netmon # Change this
-      MYSQL_PASSWORD: password # Change this
+      MYSQL_ROOT_PASSWORD: password 
+      MYSQL_DATABASE: netmon
+      MYSQL_USER: netmon 
+      MYSQL_PASSWORD: password 
     ports:
       - "3306:3306"
     volumes:
@@ -28,10 +30,10 @@ services:
       MYSQL_CONNECTION_STRING: netmon:password@tcp(mysql_db)/netmon?parseTime=true
       DASHBOARD_PASSWORD: password
       DASHBOARD_USERNAME: admin
-      OPENSEARCH_ADDRESS: https://10.0.1.10:9200
+      OPENSEARCH_ADDRESS: https://10.0.1.10:9200 
       OPENSEARCH_USERNAME: admin
       OPENSEARCH_PASSWORD: SecretPassword
-      OPENSEARCH_DASHBOARD_URL: https://10.0.1.10
+      OPENSEARCH_DASHBOARD_URL: https://10.0.1.10 
       PORT: 9091
     ports:
       - "9091:9091"
@@ -45,8 +47,8 @@ services:
     environment:
       PORT: 8080
       RUN_MODE: release
-      MYSQL_CONNECTION_STRING: netmon:password@tcp(mysql_db)/netmon?parseTime=true
-      OPENSEARCH_ADDRESS: https://10.0.1.10:9200
+      MYSQL_CONNECTION_STRING: netmon:password@tcp(mysql_db)/netmon?parseTime=true  
+      OPENSEARCH_ADDRESS: https://10.0.1.10:9200  
       OPENSEARCH_USERNAME: admin
       OPENSEARCH_PASSWORD: SecretPassword
     ports:
