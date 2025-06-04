@@ -98,8 +98,8 @@ collector:
   interval: 5
 
 logs:
-  zeek_path: "/opt/zeek/spool" # Spool directory of Zeek
-  suricata_path: "/var/log/suricata"
+  zeek_path: "/zeek"
+  suricata_path: "/suricata"
 ```
 
 Configuration parameters:
