@@ -1,0 +1,59 @@
+services:
+  db:
+    image: mysql:8.4.5
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password # Change this
+      MYSQL_DATABASE: netmon # Change this
+      MYSQL_USER: netmon # Change this
+      MYSQL_PASSWORD: password # Change this
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql # Place your schema file here
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$MYSQL_ROOT_PASSWORD"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+      start_period: 40s
+
+  manager:
+    image: smcsec/security-monitoring-manager:latest
+    container_name: manager
+    environment:
+      MYSQL_CONNECTION_STRING: netmon:password@tcp(mysql_db)/netmon?parseTime=true
+      DASHBOARD_PASSWORD: password
+      DASHBOARD_USERNAME: admin
+      OPENSEARCH_ADDRESS: https://10.0.1.10:9200
+      OPENSEARCH_USERNAME: admin
+      OPENSEARCH_PASSWORD: SecretPassword
+      OPENSEARCH_DASHBOARD_URL: https://10.0.1.10
+      PORT: 9091
+    ports:
+      - "9091:9091"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  worker:
+    image: smcsec/security-monitoring-worker:latest
+    container_name: worker
+    environment:
+      PORT: 8080
+      RUN_MODE: release
+      MYSQL_CONNECTION_STRING: netmon:password@tcp(mysql_db)/netmon?parseTime=true
+      OPENSEARCH_ADDRESS: https://10.0.1.10:9200
+      OPENSEARCH_USERNAME: admin
+      OPENSEARCH_PASSWORD: SecretPassword
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
