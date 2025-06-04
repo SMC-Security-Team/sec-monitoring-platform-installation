@@ -54,6 +54,9 @@ MISP_AUTHKEY=misp_api_key
 docker run -d -p 8080:8080 --env-file ./.env smcsec/security-monitoring-worker
 ```
 
+### Deploy Manager and Worker using Docker Compose
+https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/tree/main/single-node
+
 ## Sensor
 
 The sensor is used to forward the Suricata and Zeek logs to the worker. It will first structure the logs, then send them to the worker with an authentication key. It also reports the status of the sensor to the system, such as CPU usage and memory. 
