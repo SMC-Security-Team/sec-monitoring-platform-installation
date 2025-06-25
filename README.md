@@ -11,7 +11,7 @@ The Worker is used to receive logs from the sensors and then authenticate these 
 - MISP
 
 ### Manager and Worker Architecture
-![manager_worker](https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/blob/main/manager_worker.png)
+![manager_worker](https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/blob/main/architecture.png)
 
 ### Database Setup
 ```
