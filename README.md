@@ -13,12 +13,19 @@ The Worker is used to receive logs from the sensors and then authenticate these 
 ### Manager and Worker Architecture
 ![manager_worker](https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/blob/main/architecture.png)
 
-### Database Setup
+### Deployment 
+
+#### Deploy using Docker Compose
+https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/tree/main/single-node
+
+
+#### Deploy manually
+##### Database Setup
 ```
 mysql -u username -p your_database < schema.sql
 ```
 
-### Starting Manager
+##### Starting Manager
 1. Create a `.env` file with the following variables
 ```env
 MYSQL_CONNECTION_STRING=root:root@tcp(10.0.0.2)/db_name?parseTime=true
@@ -36,7 +43,7 @@ PORT=9091 # Running Port
 docker run -d -p 9091:9091 --env-file ./.env smcsec/security-monitoring-manager
 ```
 
-### Starting Worker
+##### Starting Worker
 
 ```env
 PORT=8080
@@ -54,8 +61,7 @@ MISP_AUTHKEY=misp_api_key
 docker run -d -p 8080:8080 --env-file ./.env smcsec/security-monitoring-worker
 ```
 
-### Deploy Manager and Worker using Docker Compose
-https://github.com/SMC-Security-Team/sec-monitoring-platform-installation/tree/main/single-node
+
 
 ## Sensor
 
